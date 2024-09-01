@@ -7,12 +7,14 @@ import { addUser, removeUser } from '../utils/userSlice';
 import { LOGO, PROFILEIMG } from './../utils/constant';
 import { toggleGptSearchView } from './../utils/gptSlice'
 import LanguageSelect from './LanguageSelect';
+import { lang } from './../utils/languageConstant';
 
 const MainHeader = () => {    
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const showGptSearch = useSelector((state) => state.gpt.showGptSearch);
+  const langKey = useSelector((store) => store.config.lang);
 
   const handleSignOut = () =>{
     signOut(auth).then(() => { 
@@ -26,7 +28,9 @@ const MainHeader = () => {
       if (user) {
         const {uid, email, displayName} = user;
         dispatch(addUser({uid:uid, email:email, displayName:displayName}));
-        navigate("/browse");
+        if (window.location.pathname === '/') {
+          navigate('/browse');
+        }
       }
         else {
         dispatch((removeUser));
@@ -45,13 +49,12 @@ const MainHeader = () => {
       <div className="container mx-auto flex items-center justify-between py-4 px-5">
         <div className="flex items-center space-x-4">
         <Link to="/"> <img src={LOGO} className="w-36"  alt="Profile" /></Link>
+        </div>
+        <div className="flex items-center space-x-4">
           <nav className="hidden md:flex space-x-4 px-5">
-            <a href="#" className="hover:text-gray-300">Home</a>
             <a href="#" className="hover:text-gray-300">TV Shows</a>
             <a href="#" className="hover:text-gray-300">Movies</a>
             <a href="#" className="hover:text-gray-300">New & Popular</a>
-            <a href="#" className="hover:text-gray-300">My List</a>
-            <a href="#" className="hover:text-gray-300">Browse by Languages</a>
           </nav>
         </div>
         <div className="flex items-center space-x-4">
@@ -65,7 +68,7 @@ const MainHeader = () => {
           </div>
           <div className="relative">
           <h4 className="text-gray-300 hover:bg-gray-800">
-          {user?.displayName ? `Hello, ${user.displayName}` : 'Hello, Guest'}
+          {user?.displayName && `${lang[langKey]?.Greeting}, ${user.displayName}`}
           </h4>
           </div>
           <div className="relative group">
