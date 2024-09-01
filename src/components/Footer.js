@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 ml-12">
           <div>
-            <h3 className="text-white font-semibold mb-4">Questions? Call 1-800-123-4567</h3>
+            <h3 className="text-white font-semibold mb-4">Questions? Call +91-8291018926</h3>
             <ul className="space-y-2">
               <li><a href="#" className="hover:text-white">FAQ</a></li>
               <li><a href="#" className="hover:text-white">Investor Relations</a></li>
